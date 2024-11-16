@@ -8,13 +8,14 @@ from pathlib import Path
 from typing import Dict, List, Optional, Union
 
 import cv2
+import datasets
 import numpy as np
 import yaml
 from loguru import logger as eval_logger
 
 from lmms_eval.tasks._task_utils.file_utils import generate_submission_file
 
-VIDEO_TYPE = ["short", "medium", "long"]
+VIDEO_TYPE = ["long"]
 CATEGORIES = ["Knowledge", "Film & Television", "Sports Competition", "Artistic Performance", "Life Record", "Multilingual"]
 
 SUB_CATEGORIES = [
@@ -89,6 +90,11 @@ with open(Path(__file__).parent / "videomme.yaml", "r") as f:
         if "!function" not in line:
             safe_data.append(line)
 cache_name = yaml.safe_load("".join(safe_data))["dataset_kwargs"]["cache_dir"]
+
+
+def process_docs(dataset: datasets.Dataset) -> datasets.Dataset:
+    # ONLY KEEP LONG VIDEOS
+    return dataset.filter(lambda s: s["duration"] == "long")
 
 
 def parse_subtitle_time(time_str):

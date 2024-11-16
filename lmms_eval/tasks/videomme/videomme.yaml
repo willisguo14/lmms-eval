@@ -4,6 +4,7 @@ dataset_kwargs:
   cache_dir: videomme
   video: True
   # From_YouTube: True
+process_docs: !function utils.process_docs
 task: videomme
 test_split: test
 output_type: generate_until
