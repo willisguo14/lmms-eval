@@ -5,6 +5,8 @@ import os
 import time
 from copy import deepcopy
 from io import BytesIO
+from typing import List
+
 
 import numpy as np
 import requests as url_requests
